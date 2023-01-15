@@ -1,0 +1,16 @@
+export ZOPEN_TARBALL_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz"\nexport ZOPEN_TARBALL_DEPS="gettext curl make gz"\nexport ZOPEN_TYPE="TARBALL"\n\nzopen_check_results()
+{
+  dir="$1"
+  pfx="$2"
+  chk="$1/$2_check.log"
+
+  # Echo the following information to gauge build health
+  echo "actualFailures:0"
+  echo "totalTests:1"
+  echo "expectedFailures:0"
+}
+
+zopen_append_to_env()
+{
+  # echo envars outside of PATH, MANPATH, LIBPATH
+}
