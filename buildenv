@@ -1,5 +1,5 @@
 export ZOPEN_TARBALL_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz"
-export ZOPEN_TARBALL_DEPS="gettext zoslib"
+export ZOPEN_TARBALL_DEPS="gettext"
 export ZOPEN_TYPE="TARBALL"
 export ZOPEN_EXTRA_CONFIGURE_OPTS="--enable-extra-encodings"
 
