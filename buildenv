@@ -27,3 +27,9 @@ if [ ! -z "\$ZOPEN_IN_ZOPEN_BUILD" ]; then
 fi
 ZZ
 }
+
+export ZOPEN_RUNTIME_DEPS=""
+
+zopen_get_version() {
+  ./src/iconv --version | head -1 | awk -F" |)" '{ print $4 }'
+}
