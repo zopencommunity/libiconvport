@@ -53,7 +53,7 @@ for conv in ${convlist}; do
   ibmout=/tmp/ibm.$$.${conv}.txt
   if ! iconv -f "${conv}" -t "ISO8859-1" <"${sbtbl}" >"${zotout}" || ! chtag -r "${zotout}" ; then
     echo "Unable to z/OS Open Tools iconv from ${conv}. See ${zotout}" 2>&1
-    #exit 4
+    exit 4
   fi
 
   if ! /bin/iconv -f "${conv}" -t "ISO8859-1" <"${sbtbl}" >"${ibmout}" || ! chtag -r "${ibmout}" ; then
@@ -62,7 +62,7 @@ for conv in ${convlist}; do
   fi
   if ! cmp "${zotout}" "${ibmout}" ; then
     #echo "z/OS Open Tools and IBM iconv produced different results from ${conv}. See ${zotout} and ${ibmout} for details" >&2
-    #exit 4
+    exit 4
   else
     echo "Code page ${conv} ok"
     rm -f "${zotout}" "${ibmout}"
