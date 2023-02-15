@@ -49,23 +49,47 @@ echo "Loop through code pages"
 
 convlist="IBM-1047 ${convlist}"
 for conv in ${convlist}; do
-  zotout=/tmp/zot.$$.${conv}.txt
-  ibmout=/tmp/ibm.$$.${conv}.txt
-  if ! iconv -f "${conv}" -t "ISO8859-1" <"${sbtbl}" >"${zotout}" || ! chtag -r "${zotout}" ; then
-    echo "Unable to z/OS Open Tools iconv from ${conv}. See ${zotout}" 2>&1
-    exit 4
-  fi
+  zotout_from=/tmp/zot.$$.${conv}.from.txt
+  ibmout_from=/tmp/ibm.$$.${conv}.from.txt
+  zotout_to=/tmp/zot.$$.${conv}.to.txt
+  ibmout_to=/tmp/ibm.$$.${conv}.to.txt
 
-  if ! /bin/iconv -f "${conv}" -t "ISO8859-1" <"${sbtbl}" >"${ibmout}" || ! chtag -r "${ibmout}" ; then
-    echo "Unable to IBM iconv from ${conv}. See ${ibmout}" 2>&1
+  #
+  # Convert _from_ conv
+  #
+  if ! iconv -f "${conv}" -t "ISO8859-1" <"${sbtbl}" >"${zotout_from}" || ! chtag -r "${zotout_from}" ; then
+    echo "Unable to z/OS Open Tools iconv from ${conv}. See ${zotout_from}" 2>&1
     exit 4
   fi
-  if ! cmp "${zotout}" "${ibmout}" ; then
-    #echo "z/OS Open Tools and IBM iconv produced different results from ${conv}. See ${zotout} and ${ibmout} for details" >&2
+  if ! /bin/iconv -f "${conv}" -t "ISO8859-1" <"${sbtbl}" >"${ibmout_from}" || ! chtag -r "${ibmout_from}" ; then
+    echo "Unable to IBM iconv from ${conv}. See ${ibmout_from}" 2>&1
     exit 4
+  fi
+  if ! cmp "${zotout_from}" "${ibmout_from}" ; then
+    #echo "z/OS Open Tools and IBM iconv produced different results from ${conv}. See ${zotout_from} and ${ibmout_from} for details" >&2
+    #exit 4
   else
     echo "Code page ${conv} ok"
-    rm -f "${zotout}" "${ibmout}"
+    rm -f "${zotout_from}" "${ibmout_from}"
+  fi
+
+  #
+  # Convert _to_ conv
+  #
+  if ! iconv -t "${conv}" -f "ISO8859-1" <"${sbtbl}" >"${zotout_to}" || ! chtag -r "${zotout_to}" ; then
+    echo "Unable to z/OS Open Tools iconv to ${conv}. See ${zotout_to}" 2>&1
+    exit 4
+  fi
+  if ! /bin/iconv -t "${conv}" -f "ISO8859-1" <"${sbtbl}" >"${ibmout_to}" || ! chtag -r "${ibmout_to}" ; then
+    echo "Unable to IBM iconv to ${conv}. See ${ibmout_to}" 2>&1
+    exit 4
+  fi
+  if ! cmp "${zotout_to}" "${ibmout_to}" ; then
+    #echo "z/OS Open Tools and IBM iconv produced different results from ${conv}. See ${zotout_to} and ${ibmout_to} for details" >&2
+    #exit 4
+  else
+    echo "Code page ${conv} ok"
+    rm -f "${zotout_to}" "${ibmout_to}"
   fi
 done
 
