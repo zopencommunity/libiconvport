@@ -65,7 +65,8 @@ for conv in ${convlist}; do
     echo "Unable to IBM iconv from ${conv}. See ${ibmout_from}" 2>&1
     exit 4
   fi
-  if ! cmp "${zotout_from}" "${ibmout_from}" ; then
+  echo "Convert from ${conv} to ISO8859-1: compare open source iconv to IBM z/OS iconv"
+  if ! cmp -l "${zotout_from}" "${ibmout_from}" ; then
     #echo "z/OS Open Tools and IBM iconv produced different results from ${conv}. See ${zotout_from} and ${ibmout_from} for details" >&2
     #exit 4
   else
@@ -84,7 +85,9 @@ for conv in ${convlist}; do
     echo "Unable to IBM iconv to ${conv}. See ${ibmout_to}" 2>&1
     exit 4
   fi
-  if ! cmp "${zotout_to}" "${ibmout_to}" ; then
+
+  echo "Convert from ISO8859-1 to ${conv}: compare open source iconv to IBM z/OS iconv"
+  if ! cmp -l "${zotout_to}" "${ibmout_to}" ; then
     #echo "z/OS Open Tools and IBM iconv produced different results from ${conv}. See ${zotout_to} and ${ibmout_to} for details" >&2
     #exit 4
   else
