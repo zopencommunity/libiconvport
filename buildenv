@@ -1,5 +1,5 @@
-#export ZOPEN_TYPE="TARBALL"
-export ZOPEN_TYPE="GIT"
+export ZOPEN_TYPE="TARBALL"
+#export ZOPEN_TYPE="GIT"
 
 export ZOPEN_TARBALL_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz"
 export ZOPEN_GIT_URL="https://git.savannah.gnu.org/git/libiconv.git"
