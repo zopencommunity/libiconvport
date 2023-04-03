@@ -1,0 +1,64 @@
+diff --git a/src/iconv.c b/src/iconv.c
+index e3932e5..94ffe9c 100644
+--- a/src/iconv.c
++++ b/src/iconv.c
+@@ -672,9 +672,24 @@ static void conversion_error_other (int errnum, const char* infilename)
+         infilename,line,column);
+ }
+ 
++#ifdef __MVS__
++static int map_encoding_to_ccsid (const char* encoding)
++{
++  /* For now, this is 'short' - just handle 1047 and 
++   * have everything else be ISO8859-1
++   * Use a lookup table to do this 'right'
++   */
++  if (!strcmp(encoding, "IBM-1047") || ! strcmp(encoding, "IBM1047")) {
++    return 1047;
++  } else {
++    return 819;
++  }
++}
++#endif
++
+ /* Convert the input given in infile.  */
+ 
+-static int convert (iconv_t cd, int infile, const char* infilename)
++static int convert (iconv_t cd, int infile, const char* infilename, const char* tocode)
+ {
+   char inbuf[4096+4096];
+   size_t inbufrest = 0;
+@@ -835,6 +850,15 @@ static int convert (iconv_t cd, int infile, const char* infilename)
+     goto done;
+   }
+  done:
++#ifdef __MVS__
++  if (!status) {
++    attrib_t attr = {0};
++    attr.att_filetagchg = 1;
++    attr.att_filetag.ft_ccsid = map_encoding_to_ccsid(tocode);
++    attr.att_filetag.ft_txtflag = 1;
++    status = __fchattr(fileno(stdout), &attr, sizeof(attr));
++  }
++#endif
+   if (outbuf != initial_outbuf)
+     free(outbuf);
+   return status;
+@@ -1101,7 +1125,7 @@ int main (int argc, char* argv[])
+     if (i == argc)
+       status = convert(cd,fileno(stdin),
+                        /* TRANSLATORS: A filename substitute denoting standard input.  */
+-                       _("(stdin)"));
++                       _("(stdin)"),tocode);
+     else {
+       status = 0;
+       for (; i < argc; i++) {
+@@ -1117,7 +1141,7 @@ int main (int argc, char* argv[])
+                 infilename);
+           status = 1;
+         } else {
+-          status |= convert(cd,fileno(infile),infilename);
++          status |= convert(cd,fileno(infile),infilename,tocode);
+           fclose(infile);
+         }
+       }

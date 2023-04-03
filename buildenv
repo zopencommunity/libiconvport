@@ -1,7 +1,20 @@
-export ZOPEN_TARBALL_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz"
-export ZOPEN_TARBALL_DEPS="gettext"
 export ZOPEN_TYPE="TARBALL"
+#export ZOPEN_TYPE="GIT"
+
+export ZOPEN_TARBALL_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz"
+export ZOPEN_GIT_URL="https://git.savannah.gnu.org/git/libiconv.git"
+export ZOPEN_TARBALL_DEPS="make gettext"
+export ZOPEN_GIT_DEPS="make gettext automake autoconf perl m4 gperf sed coreutils diffutils findutils groff"
 export ZOPEN_EXTRA_CONFIGURE_OPTS="--enable-extra-encodings"
+
+rm -f patches
+if [ "${ZOPEN_TYPE}x" = "TARBALLx" ]; then
+	ln -s tarball-patches patches
+else
+  export ZOPEN_BOOTSTRAP='./autopull.sh'
+  export ZOPEN_BOOTSTRAP_OPTS="&& ./autogen.sh"
+	ln -s git-patches patches
+fi
 
 zopen_check_results()
 {
@@ -9,7 +22,7 @@ zopen_check_results()
   pfx="$2"
   chk="$1/$2_check.log"
 
-  # Echo the following information to gauge build health
+  # Testing not turned on yet... 
   echo "actualFailures:0"
   echo "totalTests:1"
   echo "expectedFailures:0"

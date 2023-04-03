@@ -1,5 +1,8 @@
 log/
 install/
 libiconv-1.17/
+libiconv/
 tests/gentbl
 tests/sbtbl.txt
+tests/sbrttbl.txt
+patches
