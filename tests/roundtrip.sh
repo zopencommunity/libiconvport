@@ -22,6 +22,10 @@ fi
 
 echo "Loop through code pages"
 
+echo "hello world" >"${sbtbl}"; chtag -r "${sbtbl}"
+
+export ICONV_EBCDIC_ZOS_UNIX=1
+
 convlist="IBM-1047"
 for conv in ${convlist}; do
   zot_ascii_in=/tmp/zot.$$.${conv}.ascii-in.txt
@@ -73,6 +77,14 @@ for conv in ${convlist}; do
     #exit 4
   else
     echo "Code page ${conv} ok for IBM z/OS iconv"
+  fi
+
+  echo "Compare converted EBCDIC from z/OS Open Tools and IBM iconv versions for equality" 
+  if ! cmp -l "${zot_ebcdic_out}" "${ibm_ebcdic_out}" ; then
+    echo "z/OS Open Tools iconv and IBM z/OS iconv did not perform equivalent translation to EBCDIC from ASCII" >&2
+    #exit 4
+  else
+    echo "Conversion to ${conv} consistent for z/OS Open Tools iconv and IBM z/OS iconv"
   fi
 done
 
