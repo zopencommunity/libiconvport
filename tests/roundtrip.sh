@@ -22,7 +22,7 @@ fi
 
 echo "Loop through code pages"
 
-echo "hello world" >"${sbtbl}"; chtag -r "${sbtbl}"
+#echo "hello world" >"${sbtbl}"; chtag -r "${sbtbl}"
 
 export ICONV_EBCDIC_ZOS_UNIX=1
 

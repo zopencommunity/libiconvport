@@ -1,12 +1,12 @@
-export ZOPEN_TYPE="TARBALL"
-#export ZOPEN_TYPE="GIT"
+#export ZOPEN_TYPE="TARBALL"
+export ZOPEN_TYPE="GIT"
 
 export ZOPEN_TARBALL_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz"
 export ZOPEN_GIT_URL="https://git.savannah.gnu.org/git/libiconv.git"
 export ZOPEN_TARBALL_DEPS="make gettext"
 export ZOPEN_GIT_DEPS="make gettext automake autoconf perl m4 gperf sed coreutils diffutils findutils groff"
 export ZOPEN_EXTRA_CONFIGURE_OPTS="--enable-extra-encodings"
-export ZOPEN_CHECK_OPTS='-i check'
+export ZOPEN_CHECK_OPTS='check'
 
 rm -f patches
 if [ "${ZOPEN_TYPE}x" = "TARBALLx" ]; then
@@ -23,15 +23,22 @@ zopen_check_results()
   pfx="$2"
   chk="$1/$2_check.log"
 
-  # Testing not turned on yet... 
-  echo "actualFailures:0"
-  echo "totalTests:1"
-  echo "expectedFailures:0"
+  totalTests=198
+  testsRun=$(grep '^/bin/sh ./check-' "${chk}" | wc -l)
+  actualFailures=$((totalTests-testsRun))
+  echo "totalTests:${totalTests}"
+  echo "expectedFailures:1"
+  echo "actualFailures:${actualFailures}"
 }
 
 zopen_append_to_env()
 {
 cat <<ZZ
+#
+# The following environment variable controls how new line conversion is done
+# If you run under USS, you _probably_ want this
+#
+export ICONV_EBCDIC_ZOS_UNIX=1
 if [ ! -z "\$ZOPEN_IN_ZOPEN_BUILD" ]; then
   export ZOPEN_EXTRA_CFLAGS="\${ZOPEN_EXTRA_CFLAGS} -I\$PWD/include"
   export ZOPEN_EXTRA_CXXFLAGS="\${ZOPEN_EXTRA_CXXFLAGS} -I\$PWD/include"

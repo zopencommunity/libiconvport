@@ -1,7 +1,16 @@
 diff --git a/tests/Makefile.in b/tests/Makefile.in
-index 794a379..1954722 100644
+index 794a379..c7629b6 100644
 --- a/tests/Makefile.in
 +++ b/tests/Makefile.in
+@@ -21,7 +21,7 @@ RM = rm -f
+ 
+ #### End of system configuration section. ####
+ 
+-SHELL = @SHELL@
++SHELL ?= @SHELL@
+ 
+ # Needed by $(LIBTOOL).
+ top_builddir = ..
 @@ -162,6 +162,8 @@ check : all table-from table-to ../src/iconv_no_i18n is-native test-shiftseq tes
  	$(SHELL) $(srcdir)/check-subst
  #	/* EBCDIC specific functionality */
