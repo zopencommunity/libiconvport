@@ -1,13 +1,15 @@
 diff --git a/Makefile.devel b/Makefile.devel
-index 5535acc..0a1ac6a 100644
+index 5535acc..37a25b8 100644
 --- a/Makefile.devel
 +++ b/Makefile.devel
-@@ -9,7 +9,7 @@ AUTOHEADER = autoheader
+@@ -9,8 +9,8 @@ AUTOHEADER = autoheader
  AUTOMAKE = automake-1.16
  ACLOCAL = aclocal-1.16
  GPERF = gperf
 -CC = gcc -Wall
-+CC = xlclang -qascii
- CFLAGS = -O
+-CFLAGS = -O
++CC ?= gcc -Wall
++CFLAGS ?= -O
  MAN2HTML = groff -mandoc -Thtml
  CP = cp
+ RM = rm -f

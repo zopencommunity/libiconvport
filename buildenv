@@ -6,7 +6,7 @@ export ZOPEN_GIT_URL="https://git.savannah.gnu.org/git/libiconv.git"
 export ZOPEN_TARBALL_DEPS="make gettext"
 export ZOPEN_GIT_DEPS="make gettext automake autoconf perl m4 gperf sed coreutils diffutils findutils groff"
 export ZOPEN_EXTRA_CONFIGURE_OPTS="--enable-extra-encodings"
-export ZOPEN_CHECK_OPTS='check'
+export ZOPEN_CHECK_OPTS='check -i'
 
 rm -f patches
 if [ "${ZOPEN_TYPE}x" = "TARBALLx" ]; then
