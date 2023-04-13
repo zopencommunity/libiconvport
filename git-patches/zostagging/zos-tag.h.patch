@@ -10,7 +10,7 @@ index 0000000..58f3b67
 +#ifdef __MVS__
 +/* See: https://www.ibm.com/docs/en/zos/latest?topic=lf-toccsid-convert-codeset-name-coded-character-set-id */
 +
-+static void chgpfx(char* encoding, size_t enclen, size_t pfxlen, const char* normpfx, size_t normpfxlen)
++static void chgpfx (char* encoding, size_t enclen, size_t pfxlen, const char* normpfx, size_t normpfxlen)
 +{
 +  /* assertion: enclen >= pfxlen >= normpfxlen */
 +  if (normpfxlen > 0) {
