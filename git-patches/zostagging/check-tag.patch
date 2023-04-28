@@ -1,17 +1,18 @@
 diff --git a/tests/check-tag b/tests/check-tag
 new file mode 100755
-index 0000000..f9fad56
+index 0000000..f593728
 --- /dev/null
 +++ b/tests/check-tag
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,44 @@
 +#!/bin/sh
 +# Check that files on z/OS are properly tagged with their CCSIDs
 +set -e
++host_os="$1"
 +iconv=../src/iconv_no_i18n
 +
 +# This test is only meaningful on z/OS (previously called OS/390)
 +rc=0
-+if uname -s | grep 'OS/390' >/dev/null ; then
++if  [ "${host_os}x" = 'openeditionx' ] ; then
 +
 +  printf 'hello' | $iconv -f ISO8859-1 -t IBM-1047 > tmp-tag-1
 +  if ls -T tmp-tag-1 | grep -v 'IBM-1047' ; then
