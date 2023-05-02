@@ -24,7 +24,7 @@ zopen_check_results()
   chk="$1/$2_check.log"
 
   totalTests=198
-  testsRun=$(grep '^/bin/bash ./check-' "${chk}" | wc -l)
+  testsRun=$(grep '/bin/bash ./check-' "${chk}" | wc -l)
   actualFailures=$((totalTests-testsRun))
   echo "totalTests:${totalTests}"
   echo "expectedFailures:1"
