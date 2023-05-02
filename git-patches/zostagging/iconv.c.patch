@@ -1,5 +1,5 @@
 diff --git a/src/iconv.c b/src/iconv.c
-index ec4caa1..c071ae8 100644
+index ec4caa1..d7f9bb7 100644
 --- a/src/iconv.c
 +++ b/src/iconv.c
 @@ -43,6 +43,11 @@
@@ -23,7 +23,19 @@ index ec4caa1..c071ae8 100644
  {
    char inbuf[4096+4096];
    size_t inbufrest = 0;
-@@ -835,6 +840,11 @@ static int convert (iconv_t cd, int infile, const char* infilename)
+@@ -686,6 +691,11 @@ static int convert (iconv_t cd, int infile, const char* infilename)
+ 
+ #if O_BINARY
+   SET_BINARY(infile);
++#endif
++#ifdef __MVS__
++  // Turn off z/OS auto-conversion
++  struct f_cnvrt req = {SETCVTOFF, 0, 0};
++  fcntl(infile, F_CONTROL_CVT, &req);
+ #endif
+   line = 1; column = 0;
+   iconv(cd,NULL,NULL,NULL,NULL);
+@@ -835,6 +845,11 @@ static int convert (iconv_t cd, int infile, const char* infilename)
      goto done;
    }
   done:
@@ -35,7 +47,7 @@ index ec4caa1..c071ae8 100644
    if (outbuf != initial_outbuf)
      free(outbuf);
    return status;
-@@ -1113,7 +1123,7 @@ int main (int argc, char* argv[])
+@@ -1113,7 +1128,7 @@ int main (int argc, char* argv[])
      if (i == argc)
        status = convert(cd,fileno(stdin),
                         /* TRANSLATORS: A filename substitute denoting standard input.  */
@@ -44,7 +56,7 @@ index ec4caa1..c071ae8 100644
      else {
        status = 0;
        for (; i < argc; i++) {
-@@ -1129,7 +1139,7 @@ int main (int argc, char* argv[])
+@@ -1129,7 +1144,7 @@ int main (int argc, char* argv[])
                  infilename);
            status = 1;
          } else {
