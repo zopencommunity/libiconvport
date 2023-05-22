@@ -25,9 +25,9 @@ zopen_check_results()
   pfx="$2"
   chk="$1/$2_check.log"
 
-  totalTests=198
+  totalTests=199
   testsRun=$(grep '/bin/bash ./check-' "${chk}" | wc -l)
-  actualFailures=$((totalTests-testsRun))
+  actualFailures=$(grep  'Error .* (ignored)' "$chk}" | wc -l)
   echo "totalTests:${totalTests}"
   echo "expectedFailures:1"
   echo "actualFailures:${actualFailures}"
