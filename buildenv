@@ -1,4 +1,4 @@
-export ZOPEN_BUILD_LINE="GIT"
+export ZOPEN_BUILD_LINE="DEV" # Default build line
 
 export ZOPEN_STABLE_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz"
 export ZOPEN_STABLE_DEPS="make gettext automake autoconf perl m4 gperf sed coreutils diffutils findutils groff bash"
@@ -9,10 +9,12 @@ export ZOPEN_EXTRA_CONFIGURE_OPTS="--enable-extra-encodings"
 
 export ZOPEN_CHECK_OPTS='check -i'
 
-zopen_init()
+zopen_post_buildenv()
 {
-  export ZOPEN_BOOTSTRAP='./autopull.sh'
-  export ZOPEN_BOOTSTRAP_OPTS="&& ./autogen.sh"
+  if [ "$ZOPEN_BUILD_LINE" = "DEV" ]; then
+    export ZOPEN_BOOTSTRAP='./autopull.sh'
+    export ZOPEN_BOOTSTRAP_OPTS="&& ./autogen.sh"
+  fi
 }
 
 zopen_check_results()
