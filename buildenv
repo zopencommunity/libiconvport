@@ -54,3 +54,9 @@ export ZOPEN_RUNTIME_DEPS=""
 zopen_get_version() {
   ./src/iconv --version | head -1 | awk -F" |)" '{ print $4 }'
 }
+
+zopen_append_to_zoslib_env() {
+cat <<EOF
+ICONV_EBCDIC_ZOS_UNIX|set|1
+EOF
+}
