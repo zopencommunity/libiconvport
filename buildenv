@@ -34,11 +34,6 @@ zopen_check_results()
 zopen_append_to_env()
 {
 cat <<ZZ
-#
-# The following environment variable controls how new line conversion is done
-# If you run under USS, you _probably_ want this
-#
-export ICONV_EBCDIC_ZOS_UNIX=1
 if [ ! -z "\$ZOPEN_IN_ZOPEN_BUILD" ]; then
   export ZOPEN_EXTRA_CFLAGS="\${ZOPEN_EXTRA_CFLAGS} -I\$PWD/include"
   export ZOPEN_EXTRA_CXXFLAGS="\${ZOPEN_EXTRA_CXXFLAGS} -I\$PWD/include"
@@ -56,6 +51,10 @@ zopen_get_version() {
 }
 
 zopen_append_to_zoslib_env() {
+#
+# The following environment variable controls how new line conversion is done
+# If you run under USS, you _probably_ want this
+#
 cat <<EOF
 ICONV_EBCDIC_ZOS_UNIX|set|1
 EOF
