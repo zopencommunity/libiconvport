@@ -1,6 +1,8 @@
-export ZOPEN_BUILD_LINE="DEV" # Default build line
+# bump: libiconv-version /LIBICONV_VERSION="(.*)"/ https://ftp.gnu.org/gnu/libiconv/|re:/href="libiconv-([\d.]+).tar.gz"/$1/|semver:*
+LIBICONV_VERSION="1.17"
 
-export ZOPEN_STABLE_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz"
+export ZOPEN_BUILD_LINE="DEV" # Default build line
+export ZOPEN_STABLE_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-${LIBICONV_VERSION}.tar.gz"
 export ZOPEN_STABLE_DEPS="make gettext automake autoconf perl m4 gperf sed coreutils diffutils findutils groff bash"
 
 export ZOPEN_DEV_URL="https://git.savannah.gnu.org/git/libiconv.git"
