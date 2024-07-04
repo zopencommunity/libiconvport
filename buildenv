@@ -61,3 +61,11 @@ cat <<EOF
 ICONV_EBCDIC_ZOS_UNIX|set|1
 EOF
 }
+
+
+zopen_post_install()
+{
+  mv $ZOPEN_INSTALL_DIR/bin/iconv $ZOPEN_INSTALL_DIR/bin/zoticonv
+  mkdir $ZOPEN_INSTALL_DIR/altbin
+  ln -s ../bin/zoticonv $ZOPEN_INSTALL_DIR/altbin/iconv
+}
