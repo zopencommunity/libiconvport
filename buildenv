@@ -2,6 +2,7 @@
 LIBICONV_VERSION="1.17"
 
 export ZOPEN_BUILD_LINE="DEV" # Default build line
+export ZOPEN_CATEGORIES="library"
 export ZOPEN_STABLE_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-${LIBICONV_VERSION}.tar.gz"
 export ZOPEN_STABLE_DEPS="make gettext automake autoconf perl m4 gperf sed coreutils diffutils findutils groff bash"
 
