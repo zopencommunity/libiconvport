@@ -1,5 +1,5 @@
 # bump: libiconv-version /LIBICONV_VERSION="(.*)"/ https://ftp.gnu.org/gnu/libiconv/|re:/href="libiconv-([\d.]+).tar.gz"/$1/|semver:*
-LIBICONV_VERSION="1.17"
+LIBICONV_VERSION="1.18"
 
 export ZOPEN_BUILD_LINE="DEV" # Default build line
 export ZOPEN_CATEGORIES="library"
