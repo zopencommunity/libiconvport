@@ -1,7 +1,7 @@
 log/
 log.STABLE/
 install/
-libiconv-1.17/
+libiconv-1.18/
 libiconv/
 tests/gentbl
 tests/sbtbl.txt
