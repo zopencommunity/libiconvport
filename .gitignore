@@ -1,4 +1,5 @@
 log/
+log.STABLE/
 install/
 libiconv-1.17/
 libiconv/
