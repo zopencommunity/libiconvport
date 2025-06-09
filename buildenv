@@ -62,19 +62,3 @@ cat <<EOF
 ICONV_EBCDIC_ZOS_UNIX|set|1
 EOF
 }
-
-zopen_install_caveats()
-{
-cat <<ZZ
-Iconv has been installed with the prefix "zot" under bin/iconv to avoid collision with z/OS /bin/ tools.
-If you prefer to use iconv without the zot prefix, source zopen-config with the option --override-zos-tools.
-Or add \$ZOPEN_ROOTFS/usr/local/altbin to your \$PATH.
-ZZ
-}
-
-zopen_post_install()
-{
-  mv $ZOPEN_INSTALL_DIR/bin/iconv $ZOPEN_INSTALL_DIR/bin/zoticonv
-  mkdir $ZOPEN_INSTALL_DIR/altbin
-  ln -s ../bin/zoticonv $ZOPEN_INSTALL_DIR/altbin/iconv
-}
