@@ -1,0 +1,17 @@
+diff --git a/src/iconv.c b/src/iconv.c
+index 7c75dfd..4f6a328 100644
+--- a/src/iconv.c
++++ b/src/iconv.c
+@@ -693,8 +693,10 @@ static int convert (iconv_t cd, int infile, const char* infilename, _GL_UNUSED c
+ #endif
+ #ifdef __MVS__
+   /* Turn off z/OS auto-conversion.  */
+-  struct f_cnvrt req = {SETCVTOFF, 0, 0};
+-  fcntl(infile, F_CONTROL_CVT, &req);
++  if (!isatty(infile)) {
++    struct f_cnvrt req = {SETCVTOFF, 0, 0};
++    fcntl(infile, F_CONTROL_CVT, &req);
++  }
+ #endif
+   line = 1; column = 0;
+   iconv(cd,NULL,NULL,NULL,NULL);
