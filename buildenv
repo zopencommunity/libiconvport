@@ -4,7 +4,7 @@ LIBICONV_VERSION="1.18"
 export ZOPEN_BUILD_LINE="STABLE" # Default build line
 export ZOPEN_CATEGORIES="library"
 export ZOPEN_STABLE_URL="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-${LIBICONV_VERSION}.tar.gz"
-export ZOPEN_STABLE_DEPS="make gettext automake autoconf perl m4 gperf sed coreutils diffutils findutils groff bash zlib"
+export ZOPEN_STABLE_DEPS="make gettext gperf sed coreutils diffutils findutils groff bash zlib"
 
 export ZOPEN_DEV_URL="https://git.savannah.gnu.org/git/libiconv.git"
 export ZOPEN_DEV_DEPS="make gettext automake autoconf perl m4 gperf sed coreutils diffutils findutils groff bash zlib"
@@ -42,7 +42,7 @@ if [ ! -z "\$ZOPEN_IN_ZOPEN_BUILD" ]; then
   export ZOPEN_EXTRA_CXXFLAGS="\${ZOPEN_EXTRA_CXXFLAGS} -I\$PWD/include"
   export ZOPEN_EXTRA_LDFLAGS="\${ZOPEN_EXTRA_LDFLAGS} -L\$PWD/lib"
   export ZOPEN_EXTRA_LIBS="\${ZOPEN_EXTRA_LIBS} -liconv"
-
+  export CMAKE_PREFIX_PATH="\$PWD/:\${CMAKE_PREFIX_PATH}"
 fi
 ZZ
 }
