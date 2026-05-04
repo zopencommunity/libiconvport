@@ -1,0 +1,26 @@
+diff --git a/lib/iconv_open1.h b/lib/iconv_open1.h
+index 64679b8..3f9b720 100644
+--- a/lib/iconv_open1.h
++++ b/lib/iconv_open1.h
+@@ -158,6 +158,10 @@
+       goto invalid;
+     }
+     to_index = ap->encoding_index;
++#if defined(__MVS__)
++    if (to_surface == ICONV_SURFACE_NONE && (all_encodings[to_index].oflags & HAVE_EBCDIC))
++      to_surface = ICONV_SURFACE_EBCDIC_ZOS_UNIX;
++#endif
+     break;
+   }
+   for (from_wchar = 0;;) {
+@@ -271,6 +275,10 @@
+       goto invalid;
+     }
+     from_index = ap->encoding_index;
++#if defined(__MVS__)
++    if (from_surface == ICONV_SURFACE_NONE && (all_encodings[from_index].oflags & HAVE_EBCDIC))
++      from_surface = ICONV_SURFACE_EBCDIC_ZOS_UNIX;
++#endif
+     break;
+   }
+ }
